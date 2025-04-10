@@ -1,6 +1,7 @@
 package problem.medium;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Problem48 {
 
@@ -12,7 +13,13 @@ public class Problem48 {
      * @return 리스트가 순차적으로 증가하면 true, 그렇지 않으면 false
      */
     public static boolean isSequentiallyIncreasing(List<Integer> numbers) {
-        // 여기에 코드 작성
-        return false;
+        /*
+        A.compareTo(B):
+        - A > B 이면 1
+        - A = B 이면 0
+        - A < B 이면 -1
+         */
+        return IntStream.range(1, numbers.size())
+            .allMatch(i -> numbers.get(i).compareTo(numbers.get(i - 1)) > 0);
     }
 }
