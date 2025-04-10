@@ -12,7 +12,9 @@ public class Problem49 {
      * @return 변환된 문자열 리스트
      */
     public static List<String> capitalizeFirstLetter(List<String> strings) {
-        // 여기에 코드 작성
-        return null;
+        return strings.stream()
+            .map(String::toLowerCase)
+            .map(s -> s.substring(0, 1).toUpperCase() + s.substring(1))
+            .toList();
     }
 }
