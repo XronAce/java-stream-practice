@@ -12,7 +12,29 @@ public class Problem64 {
      * @return 피보나치 수열에 속하는 수들의 합
      */
     public static int sumOfFibonacciNumbers(List<Integer> numbers) {
-        // 여기에 코드 작성
-        return 0;
+        return numbers.stream()
+            .filter(n -> {
+                if (n < 0) {
+                    return false;
+                }
+                if (n == 0 || n == 1) {
+                    return true;
+                }
+                int a = 0;
+                int b = 1;
+
+                while(b < n) {
+                    int next = a + b;
+                    if (next < b) {
+                        return false;
+                    }
+                    a = b;
+                    b = next;
+                }
+
+                return b == n;
+            })
+            .mapToInt(Integer::intValue)
+            .sum();
     }
 }
