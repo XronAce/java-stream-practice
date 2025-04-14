@@ -1,6 +1,7 @@
 package problem.hard;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Problem67 {
 
@@ -12,7 +13,15 @@ public class Problem67 {
      * @return 가장 긴 공통 접두사, 없으면 빈 문자열
      */
     public static String findLongestCommonPrefix(List<String> strings) {
-        // 여기에 코드 작성
-        return "";
+        return strings.stream()
+            .reduce((s1, s2) -> {
+                int minLength = Math.min(s1.length(), s2.length());
+                int length = (int) IntStream.range(0, minLength)
+                    .takeWhile(i -> s1.charAt(i) == s2.charAt(i))
+                    .count();
+
+                return s1.substring(0, length);
+            })
+            .orElse("");
     }
 }
