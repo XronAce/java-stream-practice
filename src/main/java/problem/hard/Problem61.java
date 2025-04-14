@@ -1,7 +1,9 @@
 package problem.hard;
 
+import java.util.AbstractMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Problem61 {
 
@@ -14,7 +16,26 @@ public class Problem61 {
      * @return 'key=value' 패턴의 문자열을 key와 정수 value로 변환한 Map
      */
     public static Map<String, Integer> extractKeyValuePairs(List<String> strings) {
-        // 여기에 코드 작성
-        return null;
+        return strings.stream()
+            .filter(s -> s.contains("="))
+            .map(s -> s.split("=", 2))
+            .filter(parts -> {
+                try {
+                    Integer.parseInt(parts[1].trim());
+                    return true;
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+            })
+            .map(parts -> {
+                String key = parts[0].trim();
+                Integer value = Integer.parseInt(parts[1].trim());
+                return new AbstractMap.SimpleEntry<>(key, value);
+            })
+            .collect(Collectors.toMap(
+                AbstractMap.SimpleEntry::getKey,
+                AbstractMap.SimpleEntry::getValue,
+                (existingValue, newValue) -> newValue
+            ));
     }
 }
